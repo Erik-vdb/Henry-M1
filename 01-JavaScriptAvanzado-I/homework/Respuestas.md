@@ -176,7 +176,8 @@ var test = obj.prop.getFullname;
 console.log(test());
 ```
 ## Respuesta
-
+Aurelio De Rosa (porque prop llama a getFullName)
+Juan Perez (porque var "test" toma las propiedades de la funcion "getFullName" y se ejecuta en el entorno global)
 
 # Event Loop
 ```javascript
