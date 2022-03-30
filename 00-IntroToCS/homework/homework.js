@@ -13,7 +13,7 @@ function BinarioADecimal(num) {
   
   for (let x = 0; x < binary.length; x++) {
     decimal += binary[x] * Math.pow(2, x)
-    dump.unshift(calc)
+
   }
 
   return decimal
