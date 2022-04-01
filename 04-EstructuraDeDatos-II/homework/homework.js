@@ -9,14 +9,61 @@
 // Ej:         Head --> 1
 // remove():   Head --> null y devuelve 1
 // search: Busca un valor dentro de la lista. Puede recibir un valor o una función. Si no hubiera resultados, devuelve null.
+function Node(value){
+  this.value = value
+  this.next = null
+}
 
 function LinkedList() {
-
+  this.head = null
 }
 
-function Node(value){
+LinkedList.prototype.add = function(x){
+  let Node = new Node(x)
+  let head = this.head
 
+  if (!head){
+    head = Node
+  }
+  while (head.next !== null){
+    head = head.next
+  }
+
+  head.next = Node
 }
+
+LinkedList.prototype.remove = function(){
+
+  if (!this.head){
+    return null
+  }
+
+  prev = this.head
+  head = this.head.next
+  while(this.head.next !== null){
+    prev = tail
+    head = head.next
+  }
+
+  prev.next = null
+  return this.head
+}
+
+
+LinkedList.prototype.search = function(x){
+  if (!this.head){
+    this.head = node
+    return this.head
+  }
+
+  while (this.value !== x){ 
+    this.head = this.next
+  }
+  
+  return this.head
+}
+
+
 
 // Hash Table( ver información en: https://es.wikipedia.org/wiki/Tabla_hash)
 // Una Hash table contiene un arreglo de "contenedores" o buckets donde puede guardar información.
