@@ -15,54 +15,62 @@ function Node(value){
 }
 
 function LinkedList() {
+  this._length = 0
   this.head = null
 }
 
 LinkedList.prototype.add = function(x){
-  let Node = new Node(x)
-  let head = this.head
-
-  if (!head){
-    head = Node
-  }
-  while (head.next !== null){
-    head = head.next
-  }
-
-  head.next = Node
-}
-
-LinkedList.prototype.remove = function(){
-
   if (!this.head){
-    return null
-  }
-
-  prev = this.head
-  head = this.head.next
-  while(this.head.next !== null){
-    prev = tail
-    head = head.next
-  }
-
-  prev.next = null
-  return this.head
-}
-
-
-LinkedList.prototype.search = function(x){
-  if (!this.head){
-    this.head = node
+    this.head = new Node(x)
     return this.head
   }
 
-  while (this.value !== x){ 
-    this.head = this.next
+  while(this.head.next){
+    this.head = this.head.next
   }
-  
-  return this.head
+
+  this.head.next = new Node(x)
 }
 
+
+LinkedList.prototype.remove = function(){
+  //Chequear que no sea una lista de uno o menos elementos
+  if (!this.head){
+    return null
+  }
+  if (!this.head.next){
+    let removed = this.head.value
+    this.head=null
+    return removed
+  }
+  //
+  
+  //Ir al ultimo elemento
+  while(this.head.next.next){
+    this.head = this.head.next
+  }
+
+
+  //remover el elemento y retornarlo
+  const removed = this.head.next.value
+  this.head.next = null
+  return removed
+}
+
+LinkedList.prototype.search = function(args){
+  let current = this.head
+
+  if (!current) return null
+
+  while (current){
+    if (current.value === args) return current.value
+    else if (typeof args === "function"){
+      if (args(current.value)) return current.value
+    }
+    current = current.next
+  }
+  return null
+}
 
 
 // Hash Table( ver información en: https://es.wikipedia.org/wiki/Tabla_hash)
@@ -78,8 +86,40 @@ LinkedList.prototype.search = function(x){
 //    - Retornar dicho valor.
 
 function HashTable() {
-
+  this.buckets = []
+  this.numBuckets = 35
 }
+
+HashTable.prototype.hash = function(key){
+  let sum = 0
+
+  for (let i = 0; i < key.length; i++) {
+    sum += key.charCodeAt(i) 
+  }
+
+  return sum % this.numBuckets
+}
+
+HashTable.prototype.set = function(key, value){
+  let index = this.hash(key)
+
+  if (typeof key !== 'string') throw new TypeError('Keys must be strings')
+  if (!this.buckets[index]){
+    this.buckets[index] = {}
+  }
+  this.buckets[index][key] = value
+}
+
+HashTable.prototype.get = function(key){
+  let index = this.hash(key)
+  return this.buckets[index][key]
+}
+
+HashTable.prototype.hasKey = function(key){
+  let index = this.hash(key)
+  return this.buckets[index].hasOwnProperty(key)
+}
+
 
 
 // No modifiquen nada debajo de esta linea
